@@ -1,0 +1,15 @@
+[
+    # Wt internal headers
+    { include: ["@[<\"]Wt/Dbo/ptr_impl.h[>\"]", private, "<Wt/Dbo/ptr.h>", public] },
+    { include: ["@[<\"]Wt/Dbo/weak_ptr_impl.h[>\"]", private, "<Wt/Dbo/weak_ptr.h>", public] },
+    { include: ["@[<\"]Wt/Dbo/DbAction_impl.h[>\"]", private, "<Wt/Dbo/DbAction.h>", public] },
+    { include: ["@[<\"]Wt/Dbo/Field_impl.h[>\"]", private, "<Wt/Dbo/Field.h>", public] },
+    { include: ["@[<\"]Wt/Dbo/Query_impl.h[>\"]", private, "<Wt/Dbo/Query.h>", public] },
+    { include: ["@[<\"]Wt/Dbo/Session_impl.h[>\"]", private, "<Wt/Dbo/Session.h>", public] },
+    { include: ["@[<\"]Wt/Dbo/collection_impl.h[>\"]", private, "<Wt/Dbo/collection.h>", public] },
+    { include: ["@[<\"]Wt/Signals/signals.hpp[>\"]", private, "<Wt/WJavaScript.h>", public] },
+
+    # Other library stuff that iwyu's default mappings miss
+    { include: ["<bits/exception.h>", private, "<exception>", public] },
+    { include: ["@<bits/termios-.*>", private, "<termios.h>", public] }
+]

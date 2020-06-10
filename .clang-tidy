@@ -1,0 +1,2 @@
+Checks: '*,-modernize-use-trailing-return-type,-fuchsia-default-arguments-calls,-cppcoreguidelines-pro-type-static-cast-downcast,-cppcoreguidelines-avoid-magic-numbers,-google-readability-braces-around-statements,-hicpp-braces-around-statements,-readability-braces-around-statements,-clang-analyzer-cplusplus.NewDelete,-hicpp-signed-bitwise,-readability-magic-numbers'
+WarningsAsErrors: '*'

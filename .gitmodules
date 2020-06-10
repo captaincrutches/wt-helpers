@@ -1,0 +1,3 @@
+[submodule "thirdparty/wt"]
+	path = thirdparty/wt
+	url = https://github.com/emweb/wt.git

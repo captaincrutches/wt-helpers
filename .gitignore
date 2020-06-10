@@ -1,0 +1,7 @@
+# Built and otherwise generated files
+build/
+cmake-*/
+
+# Project files
+.idea/
+.vscode/
