@@ -15,5 +15,5 @@ endif()
 
 if(USE_WT_SUBMODULE)
     add_subdirectory(wt)
-    set(Wt_INCLUDE_DIR ${WT_SOURCE_DIR}/src CACHE PATH "Wt include directory from submodule")
+    set(Wt_INCLUDE_DIR ${WT_SOURCE_DIR}/src PATH "Wt include directory from submodule")
 endif()
