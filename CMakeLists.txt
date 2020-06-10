@@ -117,7 +117,7 @@ else()
 endif()
 
 # Put our library in the root directory
-add_library(wt-helpers)
+add_library(wt-helpers SHARED)
 
 # Link to Wt; we set Wt_INCLUDE_DIR correctly in dependencies
 target_include_directories(wt-helpers SYSTEM PRIVATE ${Wt_INCLUDE_DIR})
