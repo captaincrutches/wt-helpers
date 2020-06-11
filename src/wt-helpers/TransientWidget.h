@@ -20,7 +20,7 @@ class TransientWidget final
 public:
     template<class... Args>
     TransientWidget(Wt::WContainerWidget* _parent, Args&&... args)
-      :
+    :
         parent {_parent},
         uniquePtr {std::make_unique<T>(std::forward<Args>(args)...)}
     {}

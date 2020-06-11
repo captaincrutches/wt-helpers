@@ -31,7 +31,21 @@ public:
     TranslatableMessage(std::string_view message, const bool needsTranslating = false);
     TranslatableMessage(const Wt::Json::Object& jsonObj);
 
-    void addArg(const TranslatableMessage& arg);
+    template<class... Args>
+    void addArg(Args&&... _args)
+    {
+        args.emplace_back(std::forward<Args>(_args)...);
+    }
+
+    void addArg(TranslatableMessage&& arg)
+    {
+        args.emplace_back(std::move(arg));
+    }
+
+    void addArg(const TranslatableMessage& arg)
+    {
+        args.emplace_back(arg);
+    }
 
     Wt::WString translate() const;
     Wt::Json::Object toJson() const;

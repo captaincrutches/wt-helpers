@@ -13,12 +13,13 @@ namespace Wt {
 }
 
 template <typename T>
-class InputGroup final : public Wt::WCompositeWidget
+class InputGroup : public Wt::WCompositeWidget
 {
 public:
     template <typename ...Args>
     InputGroup(Args&& ...args)
-      : Wt::WCompositeWidget(std::make_unique<Wt::WContainerWidget>())
+    :
+        Wt::WCompositeWidget(std::make_unique<Wt::WContainerWidget>())
     {
         setStyleClass("input-group");
 
@@ -59,7 +60,7 @@ public:
         return span;
     }
 
-    T* getMainInput() const { return mainInput; }
+    T const* getMainInput() const { return mainInput; }
 
 private:
     T* mainInput;
