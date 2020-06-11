@@ -18,7 +18,7 @@ TranslatableMessage::TranslatableMessage(const Wt::Json::Object& jsonObj)
     needsTranslating{jsonObj.get(KEY_NEEDSTRANSLATING).toBool().orIfNull(false)}
 {
     // Take the "args" array from the object and pull our args off it
-    auto& rawArgs = jsonObj.get(KEY_ARGS).orIfNull(Wt::Json::Array());
+    const auto& rawArgs = jsonObj.get(KEY_ARGS).orIfNull(Wt::Json::Array());
     args.reserve(rawArgs.size());
     for (const auto& value : rawArgs)
     {
@@ -39,7 +39,7 @@ Wt::WString TranslatableMessage::translate() const
         return message;
 
     auto translated = Wt::WString::tr(message);
-    for (auto& arg : args)
+    for (const auto& arg : args)
         translated.arg(arg.translate());
     return translated;
 }
