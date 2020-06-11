@@ -25,6 +25,12 @@ public:
         uniquePtr {std::make_unique<T>(std::forward<Args>(args)...)}
     {}
 
+    TransientWidget(Wt::WContainerWidget* _parent, std::unique_ptr<T> ptr)
+    :
+        parent {_parent},
+        uniquePtr {std::move(ptr)}
+    {}
+
     T* operator->() const
     {
         return ptr ? ptr : uniquePtr.get();
