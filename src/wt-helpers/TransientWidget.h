@@ -1,7 +1,7 @@
 #ifndef TRANSIENTWIDGET_H
 #define TRANSIENTWIDGET_H
 
-#include <Wt/WContainerWidget.h>
+#include <Wt/WContainerWidget.h>    // IWYU pragma: keep
 
 #include <memory>
 #include <type_traits>
@@ -15,7 +15,10 @@ namespace Wt {
 template <class T>
 class TransientWidget final
 {
-    static_assert(std::is_convertible<T, Wt::WWidget>::value, "Transient widget must be a WWidget");
+    static_assert(std::is_base_of<Wt::WWidget, T>::value
+        || std::is_convertible<T*, Wt::WWidget*>::value
+        || std::is_convertible<T, Wt::WWidget>::value,
+         "Transient widget must be a WWidget");
 
 public:
     template<class... Args>
@@ -70,11 +73,11 @@ inline void TransientWidget<T>::setInDom(bool inDom)
 {
     if (inDom && uniquePtr)
     {
-        ptr = parent->addWidget(uniquePtr);
+        ptr = parent->addWidget(std::move(uniquePtr));
     }
     else if (ptr)
     {
-        uniquePtr.set(parent->removeChild(ptr));
+        uniquePtr = parent->removeChild(ptr);
         ptr = nullptr;
     }
 
