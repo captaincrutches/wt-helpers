@@ -13,11 +13,11 @@ namespace Wt {
 }
 
 template <typename T>
-class InputGroup : public Wt::WCompositeWidget
+class InputGroup final : public Wt::WCompositeWidget
 {
 public:
     template <typename ...Args>
-    inline InputGroup(Args&& ...args)
+    InputGroup(Args&& ...args)
       : Wt::WCompositeWidget(std::make_unique<Wt::WContainerWidget>())
     {
         setStyleClass("input-group");
@@ -34,32 +34,32 @@ public:
     }
 
     template <typename Widget, typename ...Args>
-    inline Widget* prepend(Args&& ...args)
+    Widget* prepend(Args&& ...args)
     {
         return prependContainer->addNew<Widget>(std::forward<Args>(args)...);
     }
 
     template <typename Widget, typename ...Args>
-    inline Widget* append(Args&& ...args)
+    Widget* append(Args&& ...args)
     {
         return appendContainer->addNew<Widget>(std::forward<Args>(args)...);
     }
 
-    inline Wt::WText* prependText(const Wt::WString& text)
+    Wt::WText* prependText(const Wt::WString& text)
     {
         auto span = prependContainer->addNew<Wt::WText>(text);
         span->setStyleClass("input-group-text");
         return span;
     }
 
-    inline Wt::WText* appendText(const Wt::WString& text)
+    Wt::WText* appendText(const Wt::WString& text)
     {
         auto span = appendContainer->addNew<Wt::WText>(text);
         span->setStyleClass("input-group-text");
         return span;
     }
 
-    inline T* getMainInput() const { return mainInput; }
+    T* getMainInput() const { return mainInput; }
 
 private:
     T* mainInput;
