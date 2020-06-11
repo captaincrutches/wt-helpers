@@ -77,7 +77,7 @@ inline void TransientWidget<T>::setInDom(bool inDom)
     }
     else if (ptr)
     {
-        uniquePtr.swap(parent->removeChild(ptr));
+        uniquePtr = std::move(parent->removeChild(ptr));
         ptr = nullptr;
     }
 
