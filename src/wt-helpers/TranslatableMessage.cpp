@@ -9,12 +9,14 @@
 #include "TranslatableMessage.h"
 
 TranslatableMessage::TranslatableMessage(std::string_view message, const bool needsTranslating)
-  : message{message},
+:
+    message{message},
     needsTranslating{needsTranslating}
 {}
 
 TranslatableMessage::TranslatableMessage(const Wt::Json::Object& jsonObj)
-  : message{jsonObj.get(KEY_MESSAGE).toString().orIfNull("")},
+:
+    message{jsonObj.get(KEY_MESSAGE).toString().orIfNull("")},
     needsTranslating{jsonObj.get(KEY_NEEDSTRANSLATING).toBool().orIfNull(false)}
 {
     // Take the "args" array from the object and pull our args off it
@@ -28,11 +30,6 @@ TranslatableMessage::TranslatableMessage(const Wt::Json::Object& jsonObj)
     }
 }
 
-void TranslatableMessage::addArg(const TranslatableMessage& arg)
-{
-    args.push_back(arg);
-}
-
 Wt::WString TranslatableMessage::translate() const
 {
     if (!needsTranslating)
@@ -41,6 +38,7 @@ Wt::WString TranslatableMessage::translate() const
     auto translated = Wt::WString::tr(message);
     for (const auto& arg : args)
         translated.arg(arg.translate());
+
     return translated;
 }
 
