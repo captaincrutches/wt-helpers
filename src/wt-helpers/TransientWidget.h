@@ -73,11 +73,11 @@ inline void TransientWidget<T>::setInDom(bool inDom)
 {
     if (inDom && uniquePtr)
     {
-        ptr = parent->addWidget(std::move(uniquePtr));
+        ptr = parent->addWidget(uniquePtr);
     }
     else if (ptr)
     {
-        uniquePtr = std::move(parent->removeChild(ptr));
+        uniquePtr.set(parent->removeChild(ptr));
         ptr = nullptr;
     }
 

@@ -60,7 +60,7 @@ public:
         return span;
     }
 
-    T* getMainInput() const { return mainInput; }
+    T* getMainInput() { return mainInput; }
 
 private:
     T* mainInput;
