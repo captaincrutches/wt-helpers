@@ -41,12 +41,11 @@ public:
 
     void setShown(bool _shown)
     {
+        shown = _shown;
         if (alwaysInDom)
             ptr->setHidden(!shown);
         else
             setInDom(shown);
-
-        shown = _shown;
     }
 
     void setAlwaysInDom(bool _alwaysInDom)
@@ -75,9 +74,9 @@ inline void TransientWidget<T>::setInDom(bool inDom)
     {
         ptr = parent->addWidget(std::move(uniquePtr));
     }
-    else if (ptr)
+    else if (!inDom && ptr)
     {
-        uniquePtr = parent->removeChild(ptr);
+        uniquePtr = parent->removeWidget(ptr);
         ptr = nullptr;
     }
 
