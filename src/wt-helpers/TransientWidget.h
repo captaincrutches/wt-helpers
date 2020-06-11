@@ -15,7 +15,10 @@ namespace Wt {
 template <class T>
 class TransientWidget final
 {
-    static_assert(std::is_convertible<T, Wt::WWidget>::value, "Transient widget must be a WWidget");
+    static_assert(std::is_base_of<Wt::WWidget, T>::value
+        || std::is_convertible<T*, Wt::WWidget*>::value
+        || std::is_convertible<T, Wt::WWidget>::value,
+         "Transient widget must be a WWidget");
 
 public:
     template<class... Args>
