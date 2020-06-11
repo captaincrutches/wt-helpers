@@ -7,8 +7,6 @@ endif()
 
 project(wt-helpers)
 
-set(CMAKE_MODULE_PATH "/usr/local/cmake")
-
 # Enforce C++17
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -118,7 +116,7 @@ if (NOT_SUBPROJECT)
 endif()
 
 # Put our library in the root directory
-add_library(wt-helpers SHARED)
+add_library(wt-helpers)
 
 # Link to Wt; we set Wt_INCLUDE_DIR correctly in dependencies
 target_include_directories(wt-helpers SYSTEM PRIVATE ${Wt_INCLUDE_DIR})
