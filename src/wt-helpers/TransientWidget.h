@@ -1,80 +1,82 @@
 #ifndef TRANSIENTWIDGET_H
 #define TRANSIENTWIDGET_H
 
-#include <Wt/WContainerWidget.h> // IWYU pragma: keep
-#include <Wt/WWidget.h> // IWYU pragma: keep
+#include <Wt/WContainerWidget.h>
 
 #include <memory>
 #include <type_traits>
 #include <utility>
 
-/**
- * A widget that may or may not be actually present in the DOM at any given time,
- * but that we still want to keep track of.
- */
-template<class W>
-class TransientWidget
+namespace Wt {
+    class WWidget;
+}
+
+// A widget that may or may not be actually present in the DOM at any given time, but that we still want to keep track of.
+template <class T>
+class TransientWidget final
 {
-    static_assert(std::is_base_of<Wt::WWidget, W>::value, "Transient widget must be a WWidget");
+    static_assert(std::is_convertible<T, Wt::WWidget>::value, "Transient widget must be a WWidget");
 
 public:
     template<class... Args>
-    inline TransientWidget(Wt::WContainerWidget* parent, Args&&... args)
-      : parent{parent},
-        uniquePtr{std::make_unique<W>(std::forward<Args>(args)...)},
-        ptr{nullptr},
-        alwaysInDom{false},
-        currentlyInDom{false},
-        shown{false}
+    TransientWidget(Wt::WContainerWidget* _parent, Args&&... args)
+      :
+        parent {_parent},
+        uniquePtr {std::make_unique<T>(std::forward<Args>(args)...)}
     {}
 
-    inline W* operator->() const
+    T* operator->() const
     {
         return ptr ? ptr : uniquePtr.get();
     }
 
-    inline void setShown(bool shown)
+    void setShown(bool _shown)
     {
         if (alwaysInDom)
             ptr->setHidden(!shown);
         else
             setInDom(shown);
 
-        this->shown = shown;
+        shown = _shown;
     }
 
-    inline void setAlwaysInDom(bool alwaysInDom)
+    void setAlwaysInDom(bool _alwaysInDom)
     {
-        this->alwaysInDom = alwaysInDom;
+        alwaysInDom = _alwaysInDom;
         setInDom(shown || alwaysInDom);
     }
 
 private:
     Wt::WContainerWidget* parent;
 
-    std::unique_ptr<W> uniquePtr;
-    W* ptr;
+    std::unique_ptr<T> uniquePtr;
+    T* ptr = nullptr;
 
-    bool alwaysInDom;
-    bool currentlyInDom;
-    bool shown;
+    bool alwaysInDom = false;
+    bool currentlyInDom = false;
+    bool shown = false;
 
-    inline void setInDom(bool inDom)
-    {
-        if (inDom)
-        {
-            if (uniquePtr)
-                ptr = parent->addWidget(std::move(uniquePtr));
-        }
-        else if (ptr)
-        {
-            Wt::WWidget* removed = ptr->removeFromParent().release();
-            uniquePtr.reset(static_cast<W*>(removed));
-            ptr = nullptr;
-        }
-
-        currentlyInDom = inDom;
-    }
+    void setInDom(bool inDom);
 };
+
+template <class T>
+inline void TransientWidget<T>::setInDom(bool inDom)
+{
+    if (inDom)
+    {
+        if (uniquePtr)
+        {
+            ptr = parent->addWidget(std::move(uniquePtr));
+        }
+    }
+    else if (ptr)
+    {
+        Wt::WWidget* removed = ptr->removeFromParent().release();
+        uniquePtr.reset(static_cast<T*>(removed));
+        ptr = nullptr;
+    }
+
+    currentlyInDom = inDom;
+}
 
 #endif  // TRANSIENTWIDGET_H
