@@ -1,7 +1,7 @@
 #ifndef TRANSIENTWIDGET_H
 #define TRANSIENTWIDGET_H
 
-#include <Wt/WContainerWidget.h>
+#include <Wt/WContainerWidget.h>    // IWYU pragma: keep
 
 #include <memory>
 #include <type_traits>

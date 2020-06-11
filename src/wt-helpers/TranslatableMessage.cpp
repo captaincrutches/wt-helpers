@@ -3,8 +3,8 @@
 #include <Wt/Json/Value.h>
 #include <Wt/WString.h>
 
-#include <string>
 #include <string_view>
+#include <vector>
 
 #include "TranslatableMessage.h"
 
