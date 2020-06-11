@@ -68,17 +68,13 @@ private:
 template <class T>
 inline void TransientWidget<T>::setInDom(bool inDom)
 {
-    if (inDom)
+    if (inDom && uniquePtr)
     {
-        if (uniquePtr)
-        {
-            ptr = parent->addWidget(std::move(uniquePtr));
-        }
+        ptr = parent->addWidget(uniquePtr);
     }
     else if (ptr)
     {
-        Wt::WWidget* removed = ptr->removeFromParent().release();
-        uniquePtr.reset(static_cast<T*>(removed));
+        uniquePtr.set(parent->removeChild(ptr));
         ptr = nullptr;
     }
 
