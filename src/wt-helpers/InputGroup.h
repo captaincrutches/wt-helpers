@@ -46,11 +46,11 @@ public:
         return appendContainer->addNew<Widget>(std::forward<Args>(args)...);
     }
 
-    // Builds, but doesn't work
-    template<>
-    Wt::WText* prepend<Wt::WText>(const Wt::WString& text)
+    // Builds and works maybe
+    template<typename Widget, typename std::enable_if<std::is_same<Widget, Wt::WText>::value, Widget>::type* = nullptr>
+    Widget* prepend(const Wt::WString& text)
     {
-        auto span = prependContainer->addNew<Wt::WText>(text);
+        auto span = prependContainer->addNew<Widget>(text);
         span->setStyleClass("input-group-text");
         return span;
     }
@@ -69,15 +69,6 @@ private:
     Wt::WContainerWidget* prependContainer;
     Wt::WContainerWidget* appendContainer;
 };
-
-// Doesn't build, trying to specialize a member without specializing the class
-template <typename T>
-inline Wt::WText* InputGroup<T>::prepend<Wt::WText>(const Wt::WString& text)
-{
-    auto span = appendContainer->addNew<Wt::WText>(text);
-    span->setStyleClass("input-group-text");
-    return span;
-}
 
 
 #endif  // INPUTGROUP_H
