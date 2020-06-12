@@ -34,7 +34,7 @@ public:
         appendContainer->setStyleClass("input-group-append");
     }
 
-    template <typename Widget, typename ...Args>
+    template <typename Widget, typename ...Args, typename std::enable_if<!std::is_same<Widget, Wt::WText>::value, Widget>::type* = nullptr>
     Widget* prepend(Args&& ...args)
     {
         return prependContainer->addNew<Widget>(std::forward<Args>(args)...);
