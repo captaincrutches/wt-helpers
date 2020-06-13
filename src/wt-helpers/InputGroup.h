@@ -3,13 +3,14 @@
 
 #include <Wt/WCompositeWidget.h>
 #include <Wt/WContainerWidget.h>
-#include <Wt/WText.h>
 
 #include <memory>
+#include <type_traits>
 #include <utility>
 
 namespace Wt {
     class WString;
+    class WText;
 }
 
 // WT implementation of a Bootstrap input group as described at https://getbootstrap.com/docs/4.3/components/input-group/
