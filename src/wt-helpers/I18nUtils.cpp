@@ -17,7 +17,7 @@ Wt::WLocalDateTime localizeDate(const Wt::WDateTime& date)
     const std::string& tzName{Wt::WApplication::instance()->environment().timeZoneName()};
 
     // get in the zone
-    const auto* zone = tzName.empty()
+    auto zone = tzName.empty()
         ? date::zoned_traits<const date::time_zone*>::default_zone()
         : date::locate_zone(tzName);
     loc.setTimeZone(zone);
